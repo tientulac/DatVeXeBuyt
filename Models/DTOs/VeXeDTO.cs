@@ -1,0 +1,12 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace QLXeBuyt.Models.DTOs
+{
+    public class VeXeDTO : VeXe
+    {
+        public string Tentuyen { get; set; }
+    }
+}
