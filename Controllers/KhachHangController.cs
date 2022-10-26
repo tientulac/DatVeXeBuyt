@@ -17,12 +17,12 @@ namespace QLXeBuyt.Controllers
         {
             if (req.Makhachhang > 0)
             {
-                var _khachhang = db.Khachhangs.Where(x => x.Makhachhang == req.Makhachhang).FirstOrDefault();
+                var _khachhang = db.Khachhangs.
+                    Where(x => x.Makhachhang == req.Makhachhang).FirstOrDefault();
                 _khachhang.Ten = req.Ten;
                 _khachhang.Ngaysinh = req.Ngaysinh;
                 _khachhang.CCCD = req.CCCD;
                 _khachhang.TheHSSV = req.TheHSSV;
-                _khachhang.Gioitinh = req.Gioitinh;
                 _khachhang.Gioitinh = req.Gioitinh;
                 db.SubmitChanges();
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
@@ -62,7 +62,7 @@ namespace QLXeBuyt.Controllers
 
         public ActionResult Index()
         {
-            var listKhachHang = (from a in db.Khachhangs
+            var listKhachHang = (from a in db.Khachhangs.Where(k => db.Taikhoans.Where(t => t.Id_Taikhoan == k.Id_Taikhoan).FirstOrDefault().Maloai == "02")
                                  select new KhachHangDTO { 
                                     Makhachhang = a.Makhachhang,
                                     Ten = a.Ten,

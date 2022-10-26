@@ -37,6 +37,7 @@
                                                 <th>Mã trạm</th>
                                                 <th>Tên trạm</th>
                                                 <th>Tên tuyến đường</th>
+                                                <th>Toạ độ</th>
                                                 <th>Hành động</th>
                                             </tr>
                                         </thead>
@@ -47,12 +48,16 @@
                                                     <td>@m.Matram</td>
                                                     <td>@m.Tentram</td>
                                                     <td>@m.Tentuyenduong</td>
+                                                    <td>@m.Toado</td>
                                                     <td>
                                                         <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#addModal" style="margin-right: 5px;" onclick="openUpdateModal(@m.Matram)">
                                                             <i class="fas fa-edit"></i>
                                                         </button>
-                                                        <button class="btn btn-outline-danger btn-sm" onclick="openDeleteModal(@m.Matram)" data-toggle="modal" data-target="#deleteModal">
+                                                        <button class="btn btn-outline-danger btn-sm" onclick="openDeleteModal(@m.Matram)" style="margin-right: 5px;" data-toggle="modal" data-target="#deleteModal">
                                                             <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-primary btn-sm" onclick="openToadoModal(@m.Matram)" data-toggle="modal" data-target="#toadoModal">
+                                                            <i class="fas fa-eye"></i>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -92,6 +97,14 @@
                                 <label class="required" for="inputEmail4">Tên tuyến đường</label>
                                 <input type="text" class="form-control contact-method" id="Tentuyenduong" placeholder="Nhập tên tuyến">
                             </div>
+                            <div class="form-group col-md-12">
+                                <label class="required" for="inputEmail4">Toạ độ</label>
+                                <input type="text" class="form-control contact-method" id="Toado" placeholder="Nhập toạ độ">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="required" for="inputEmail4">Mã nhúng</label>
+                                <input type="text" class="form-control contact-method" id="Manhung" placeholder="Nhập mã nhúng">
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -116,6 +129,26 @@
             </div>
             <div class="modal-body">
                 <h2 style="text-align:center">Bạn chắc chắn muốn xóa bản ghi này ?</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                <button type="button" class="btn btn-primary" onclick="deleteItem()">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="toadoModal" tabindex="-1" role="dialog" aria-labelledby="toadoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="toadoModalLabel">Mã nhúng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="ManhungModal"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
@@ -163,6 +196,8 @@
             Matram: id_record,
             Tentram: $('#Tentram').val(),
             Tentuyenduong: $('#Tentuyenduong').val(),
+            Toado: $('#Toado').val(),
+            Manhung: $('#Manhung').val(),
         }
 
         postData('/Tramxe/Save', req)
@@ -183,6 +218,24 @@
         id_record = id;
     }
 
+    openToadoModal = (id) => {
+        id_record = id;
+        $.ajax({
+            url: '/TramXe/FindById?matram=' + id,
+            type: 'GET',
+            success: function (result) {
+                if (result.success) {
+                    console.log(result.data.Manhung);
+                    $('#ManhungModal').html('<p>'+result.data.Manhung+'</p>');
+                }
+                else {
+                    toastr.warning('Failed !');
+                    $('.modal').modal('hide');
+                }
+            }
+        });
+    }
+
     openUpdateModal = (id) => {
         id_record = id;
         $.ajax({
@@ -192,6 +245,8 @@
                 if (result.success) {
                     $('#Tentram').val(result.data.Tentram);
                     $('#Tentuyenduong').val(result.data.Tentuyenduong);
+                    $('#Toado').val(result.data.Toado);
+                    $('#Manhung').val(result.data.Manhung);
                 }
                 else {
                     toastr.warning('Failed !');
@@ -204,7 +259,7 @@
     deleteItem = () => {
         $.ajax({
             url: '/TramXe/Delete?matram=' + id_record,
-            type: 'DELETE',
+            type: 'GET',
             success: function (result) {
                 if (result.success) {
                     toastr.success('Successfully !');

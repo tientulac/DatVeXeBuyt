@@ -155,3 +155,12 @@ D:\GitHubProject\QuanLyXeBuyt\QLXeBuyt\QLXeBuyt\obj\Debug\QLXeBuyt.csproj.CoreCo
 D:\GitHubProject\QuanLyXeBuyt\QLXeBuyt\QLXeBuyt\obj\Debug\QLXeBuyt.csproj.CopyComplete
 D:\GitHubProject\QuanLyXeBuyt\QLXeBuyt\QLXeBuyt\obj\Debug\QLXeBuyt.dll
 D:\GitHubProject\QuanLyXeBuyt\QLXeBuyt\QLXeBuyt\obj\Debug\QLXeBuyt.pdb
+D:\TienNN\DoAnWeb\QLXeBus\DatVeXeBuyt\obj\Debug\QLXeBuyt.dll
+D:\TienNN\DoAnWeb\QLXeBus\DatVeXeBuyt\obj\Debug\QLXeBuyt.pdb
+D:\TienNN\DoAnWeb\QLXeBus\DatVeXeBuyt\bin\QLXeBuyt.dll.config
+D:\TienNN\DoAnWeb\QLXeBus\DatVeXeBuyt\bin\QLXeBuyt.dll
+D:\TienNN\DoAnWeb\QLXeBus\DatVeXeBuyt\bin\QLXeBuyt.pdb
+D:\TienNN\DoAnWeb\QLXeBus\DatVeXeBuyt\bin\Newtonsoft.Json.dll
+D:\TienNN\DoAnWeb\QLXeBus\DatVeXeBuyt\obj\Debug\QLXeBuyt.csproj.CoreCompileInputs.cache
+D:\TienNN\DoAnWeb\QLXeBus\DatVeXeBuyt\obj\Debug\QLXeBuyt.csproj.CopyComplete
+D:\TienNN\DoAnWeb\QLXeBus\DatVeXeBuyt\bin\Newtonsoft.Json.xml

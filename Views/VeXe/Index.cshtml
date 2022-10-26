@@ -47,46 +47,42 @@
                                                 <th>Loại vé</th>
                                                 <th>Vé tháng</th>
                                                 <th>Giá</th>
-                                                <th>QR Code</th>
                                                 <th>Hành động</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             @foreach (var m in @ViewBag.ListVeXe)
                                             {
-                                            <tr>
-                                                <td>@m.Mave</td>
-                                                <td>@m.Ngayphathanh</td>
-                                                <td>@m.Ngayhethan</td>
-                                                <td>@m.Tinhtrang</td>
-                                                <td>@m.Tentuyen</td>
-                                                <td>@m.Loaive</td>
-                                                @if (m.Vethang == true)
-                                                {
-                                                    <td style="text-align: center">
-                                                        <i style="color: green" class="fa fa-check" aria-hidden="true"></i>
-                                                    </td>
-                                                }
-                                                else
-                                                {
-                                                    <td style="text-align: center">
-                                                        <i style="color: red" class="fa fa-times" aria-hidden="true"></i>
+                                                <tr>
+                                                    <td>@m.Mave</td>
+                                                    <td>@m.Ngayphathanh</td>
+                                                    <td>@m.Ngayhethan</td>
+                                                    <td>@m.Tinhtrang</td>
+                                                    <td>@m.Tentuyen</td>
+                                                    <td>@m.Loaive</td>
+                                                    @if (m.Vethang == true)
+                                                    {
+                                                        <td style="text-align: center">
+                                                            <i style="color: green" class="fa fa-check" aria-hidden="true"></i>
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td style="text-align: center">
+                                                            <i style="color: red" class="fa fa-times" aria-hidden="true"></i>
 
+                                                        </td>
+                                                    }
+                                                    <td>@m.Giatien</td>
+                                                    <td>
+                                                        <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#addModal" style="margin-right: 5px;" onclick="openUpdateModal(@m.Mave)">
+                                                            <i class="fas fa-edit"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-danger btn-sm" onclick="openDeleteModal(@m.Mave)" data-toggle="modal" data-target="#deleteModal">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
                                                     </td>
-                                                }
-                                                <td>@m.Giatien</td>
-                                                <td>
-                                                    <div style="width: 100px" id="qrcode"></div>
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#addModal" style="margin-right: 5px;" onclick="openUpdateModal(@m.Mave)">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-outline-danger btn-sm" onclick="openDeleteModal(@m.Mave)" data-toggle="modal" data-target="#deleteModal">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
+                                                </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -96,6 +92,27 @@
                     </div>
 
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Xóa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center">Bạn chắc chắn muốn xóa bản ghi này ?</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                <button type="button" class="btn btn-primary" onclick="deleteItem()">Xác nhận</button>
             </div>
         </div>
     </div>
@@ -201,7 +218,6 @@
     }
 
     $(document).ready(function () {
-        new QRCode(document.getElementById("qrcode"), "https://code-boxx.com/");
         $('#table_ve').DataTable();
     });
 
@@ -273,7 +289,7 @@
     deleteItem = () => {
         $.ajax({
             url: '/VeXe/Delete?mave=' + id_record,
-            type: 'DELETE',
+            type: 'GET',
             success: function (result) {
                 if (result.success) {
                     toastr.success('Successfully !');

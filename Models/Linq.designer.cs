@@ -66,7 +66,7 @@ namespace QLXeBuyt.Models
     #endregion
 		
 		public LinqDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["QLXeBusConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["QLXeBusConnectionString1"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -226,6 +226,10 @@ namespace QLXeBuyt.Models
 		
 		private System.Nullable<int> _Trangthai;
 		
+		private System.Nullable<int> _Soluotsudung;
+		
+		private string _QRcode;
+		
 		public CT_Hoadon()
 		{
 		}
@@ -274,6 +278,38 @@ namespace QLXeBuyt.Models
 				if ((this._Trangthai != value))
 				{
 					this._Trangthai = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Soluotsudung", DbType="Int")]
+		public System.Nullable<int> Soluotsudung
+		{
+			get
+			{
+				return this._Soluotsudung;
+			}
+			set
+			{
+				if ((this._Soluotsudung != value))
+				{
+					this._Soluotsudung = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QRcode", DbType="NVarChar(MAX)")]
+		public string QRcode
+		{
+			get
+			{
+				return this._QRcode;
+			}
+			set
+			{
+				if ((this._QRcode != value))
+				{
+					this._QRcode = value;
 				}
 			}
 		}
@@ -1183,8 +1219,6 @@ namespace QLXeBuyt.Models
 		
 		private string _Maloai;
 		
-		private EntitySet<Taikhoan> _Taikhoans;
-		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1199,7 +1233,6 @@ namespace QLXeBuyt.Models
 		
 		public Loaitaikhoan()
 		{
-			this._Taikhoans = new EntitySet<Taikhoan>(new Action<Taikhoan>(this.attach_Taikhoans), new Action<Taikhoan>(this.detach_Taikhoans));
 			OnCreated();
 		}
 		
@@ -1263,19 +1296,6 @@ namespace QLXeBuyt.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Loaitaikhoan_Taikhoan", Storage="_Taikhoans", ThisKey="Id_Loaitaikhoan", OtherKey="Id_Loaitaikhoan")]
-		public EntitySet<Taikhoan> Taikhoans
-		{
-			get
-			{
-				return this._Taikhoans;
-			}
-			set
-			{
-				this._Taikhoans.Assign(value);
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1294,18 +1314,6 @@ namespace QLXeBuyt.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Taikhoans(Taikhoan entity)
-		{
-			this.SendPropertyChanging();
-			entity.Loaitaikhoan = this;
-		}
-		
-		private void detach_Taikhoans(Taikhoan entity)
-		{
-			this.SendPropertyChanging();
-			entity.Loaitaikhoan = null;
 		}
 	}
 	
@@ -1823,17 +1831,15 @@ namespace QLXeBuyt.Models
 		
 		private string _Tinhtrang;
 		
-		private System.Nullable<int> _Id_Loaitaikhoan;
-		
 		private System.Nullable<decimal> _Sodu;
+		
+		private string _Maloai;
 		
 		private EntitySet<Khachhang> _Khachhangs;
 		
 		private EntitySet<Nhanvien> _Nhanviens;
 		
 		private EntitySet<Phanhoi> _Phanhois;
-		
-		private EntityRef<Loaitaikhoan> _Loaitaikhoan;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1853,10 +1859,10 @@ namespace QLXeBuyt.Models
     partial void OnCodeChanged();
     partial void OnTinhtrangChanging(string value);
     partial void OnTinhtrangChanged();
-    partial void OnId_LoaitaikhoanChanging(System.Nullable<int> value);
-    partial void OnId_LoaitaikhoanChanged();
     partial void OnSoduChanging(System.Nullable<decimal> value);
     partial void OnSoduChanged();
+    partial void OnMaloaiChanging(string value);
+    partial void OnMaloaiChanged();
     #endregion
 		
 		public Taikhoan()
@@ -1864,7 +1870,6 @@ namespace QLXeBuyt.Models
 			this._Khachhangs = new EntitySet<Khachhang>(new Action<Khachhang>(this.attach_Khachhangs), new Action<Khachhang>(this.detach_Khachhangs));
 			this._Nhanviens = new EntitySet<Nhanvien>(new Action<Nhanvien>(this.attach_Nhanviens), new Action<Nhanvien>(this.detach_Nhanviens));
 			this._Phanhois = new EntitySet<Phanhoi>(new Action<Phanhoi>(this.attach_Phanhois), new Action<Phanhoi>(this.detach_Phanhois));
-			this._Loaitaikhoan = default(EntityRef<Loaitaikhoan>);
 			OnCreated();
 		}
 		
@@ -2008,30 +2013,6 @@ namespace QLXeBuyt.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_Loaitaikhoan", DbType="Int")]
-		public System.Nullable<int> Id_Loaitaikhoan
-		{
-			get
-			{
-				return this._Id_Loaitaikhoan;
-			}
-			set
-			{
-				if ((this._Id_Loaitaikhoan != value))
-				{
-					if (this._Loaitaikhoan.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnId_LoaitaikhoanChanging(value);
-					this.SendPropertyChanging();
-					this._Id_Loaitaikhoan = value;
-					this.SendPropertyChanged("Id_Loaitaikhoan");
-					this.OnId_LoaitaikhoanChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Sodu", DbType="Decimal(18,0)")]
 		public System.Nullable<decimal> Sodu
 		{
@@ -2048,6 +2029,26 @@ namespace QLXeBuyt.Models
 					this._Sodu = value;
 					this.SendPropertyChanged("Sodu");
 					this.OnSoduChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Maloai", DbType="NChar(10)")]
+		public string Maloai
+		{
+			get
+			{
+				return this._Maloai;
+			}
+			set
+			{
+				if ((this._Maloai != value))
+				{
+					this.OnMaloaiChanging(value);
+					this.SendPropertyChanging();
+					this._Maloai = value;
+					this.SendPropertyChanged("Maloai");
+					this.OnMaloaiChanged();
 				}
 			}
 		}
@@ -2088,40 +2089,6 @@ namespace QLXeBuyt.Models
 			set
 			{
 				this._Phanhois.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Loaitaikhoan_Taikhoan", Storage="_Loaitaikhoan", ThisKey="Id_Loaitaikhoan", OtherKey="Id_Loaitaikhoan", IsForeignKey=true)]
-		public Loaitaikhoan Loaitaikhoan
-		{
-			get
-			{
-				return this._Loaitaikhoan.Entity;
-			}
-			set
-			{
-				Loaitaikhoan previousValue = this._Loaitaikhoan.Entity;
-				if (((previousValue != value) 
-							|| (this._Loaitaikhoan.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Loaitaikhoan.Entity = null;
-						previousValue.Taikhoans.Remove(this);
-					}
-					this._Loaitaikhoan.Entity = value;
-					if ((value != null))
-					{
-						value.Taikhoans.Add(this);
-						this._Id_Loaitaikhoan = value.Id_Loaitaikhoan;
-					}
-					else
-					{
-						this._Id_Loaitaikhoan = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Loaitaikhoan");
-				}
 			}
 		}
 		
@@ -2304,6 +2271,10 @@ namespace QLXeBuyt.Models
 		
 		private string _Tentuyenduong;
 		
+		private string _Toado;
+		
+		private string _Manhung;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2314,6 +2285,10 @@ namespace QLXeBuyt.Models
     partial void OnTentramChanged();
     partial void OnTentuyenduongChanging(string value);
     partial void OnTentuyenduongChanged();
+    partial void OnToadoChanging(string value);
+    partial void OnToadoChanged();
+    partial void OnManhungChanging(string value);
+    partial void OnManhungChanged();
     #endregion
 		
 		public Tramxe()
@@ -2377,6 +2352,46 @@ namespace QLXeBuyt.Models
 					this._Tentuyenduong = value;
 					this.SendPropertyChanged("Tentuyenduong");
 					this.OnTentuyenduongChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Toado", DbType="NVarChar(MAX)")]
+		public string Toado
+		{
+			get
+			{
+				return this._Toado;
+			}
+			set
+			{
+				if ((this._Toado != value))
+				{
+					this.OnToadoChanging(value);
+					this.SendPropertyChanging();
+					this._Toado = value;
+					this.SendPropertyChanged("Toado");
+					this.OnToadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Manhung", DbType="NVarChar(MAX)")]
+		public string Manhung
+		{
+			get
+			{
+				return this._Manhung;
+			}
+			set
+			{
+				if ((this._Manhung != value))
+				{
+					this.OnManhungChanging(value);
+					this.SendPropertyChanging();
+					this._Manhung = value;
+					this.SendPropertyChanged("Manhung");
+					this.OnManhungChanged();
 				}
 			}
 		}

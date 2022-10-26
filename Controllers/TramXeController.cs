@@ -19,6 +19,8 @@ namespace QLXeBuyt.Controllers
                 var _tramxe = db.Tramxes.Where(x => x.Matram == req.Matram).FirstOrDefault();
                 _tramxe.Tentram = req.Tentram;
                 _tramxe.Tentuyenduong = req.Tentuyenduong;
+                _tramxe.Toado = req.Toado;
+                _tramxe.Manhung = req.Manhung;
                 db.SubmitChanges();
                 return Json(new { success = true, data = _tramxe }, JsonRequestBehavior.AllowGet);
             }

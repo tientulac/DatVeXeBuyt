@@ -38,7 +38,7 @@ namespace QLXeBuyt.Controllers
                                   Makhachhang = a.Makhachhang,
                                   Trangthai = a.Trangthai,
                                   Tentrangthai = a.Trangthai == 1 ? "Chưa sử dụng" : "Đã qua sử dụng",
-                                  Tenkhachhang = db.Khachhangs.Where(x => x.Makhachhang == a.Makhachhang).FirstOrDefault().Ten ?? "Không rõ"
+                                  Tenkhachhang = db.Khachhangs.Where(x => x.Makhachhang == a.Makhachhang).FirstOrDefault().Ten ?? "Không rõ",
                               }).FirstOrDefault();
             return Json(new { success = true, data = _hoadon }, JsonRequestBehavior.AllowGet);
         }

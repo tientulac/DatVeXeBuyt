@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QLXeBus" Class="LinqDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-8JPNURT;Initial Catalog=QLXeBus;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="QLXeBusConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=ADMIN-PC;Initial Catalog=QLXeBus;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="QLXeBusConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.CT_Hoadon" Member="CT_Hoadons">
     <Type Name="CT_Hoadon">
       <Column Name="Mave" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="MaHD" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="Trangthai" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Soluotsudung" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="QRcode" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Association Name="Hoadon_CT_Hoadon" Member="Hoadon" ThisKey="MaHD" OtherKey="MaHD" Type="Hoadon" IsForeignKey="true" />
       <Association Name="VeXe_CT_Hoadon" Member="VeXe" ThisKey="Mave" OtherKey="Mave" Type="VeXe" IsForeignKey="true" />
     </Type>
@@ -79,7 +81,6 @@
       <Column Name="Id_Loaitaikhoan" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Ten" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Maloai" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Association Name="Loaitaikhoan_Taikhoan" Member="Taikhoans" ThisKey="Id_Loaitaikhoan" OtherKey="Id_Loaitaikhoan" Type="Taikhoan" />
     </Type>
   </Table>
   <Table Name="dbo.Nhanvien" Member="Nhanviens">
@@ -117,12 +118,11 @@
       <Column Name="Sodienthoai" Type="System.String" DbType="Char(10)" CanBeNull="true" />
       <Column Name="Code" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Tinhtrang" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="Id_Loaitaikhoan" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="Sodu" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="Maloai" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
       <Association Name="Taikhoan_Khachhang" Member="Khachhangs" ThisKey="Id_Taikhoan" OtherKey="Id_Taikhoan" Type="Khachhang" />
       <Association Name="Taikhoan_Nhanvien" Member="Nhanviens" ThisKey="Id_Taikhoan" OtherKey="Id_Taikhoan" Type="Nhanvien" />
       <Association Name="Taikhoan_Phanhoi" Member="Phanhois" ThisKey="Id_Taikhoan" OtherKey="Id_Taikhoan" Type="Phanhoi" />
-      <Association Name="Loaitaikhoan_Taikhoan" Member="Loaitaikhoan" ThisKey="Id_Loaitaikhoan" OtherKey="Id_Loaitaikhoan" Type="Loaitaikhoan" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Thoigianlamviec" Member="Thoigianlamviecs">
@@ -138,6 +138,8 @@
       <Column Name="Matram" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Tentram" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="Tentuyenduong" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Toado" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Manhung" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Association Name="Tramxe_CT_Tuyenxe" Member="CT_Tuyenxes" ThisKey="Matram" OtherKey="Matram" Type="CT_Tuyenxe" />
     </Type>
   </Table>

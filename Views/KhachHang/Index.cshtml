@@ -221,7 +221,7 @@
     deleteItem = () => {
         $.ajax({
             url: '/TramXe/Delete?makhachhang=' + id_record,
-            type: 'DELETE',
+            type: 'GET',
             success: function (result) {
                 if (result.success) {
                     toastr.success('Successfully !');
