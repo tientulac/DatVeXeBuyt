@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="QLXeBus" Class="LinqDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=ADMIN-PC;Initial Catalog=QLXeBus;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="QLXeBusConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-8JPNURT;Initial Catalog=QLXeBus;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="QLXeBusConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.CT_Hoadon" Member="CT_Hoadons">
     <Type Name="CT_Hoadon">
       <Column Name="Mave" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />

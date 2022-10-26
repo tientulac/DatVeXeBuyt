@@ -57,5 +57,20 @@ namespace QLXeBuyt.Controllers
             ViewBag.ListHoaDon = listHoadon;
             return View();
         }
+
+        public ActionResult List()
+        {
+            var listHoadon = (from a in db.Hoadons
+                              select new HoaDonDTO
+                              {
+                                  MaHD = a.MaHD,
+                                  Ngaymua = a.Ngaymua,
+                                  Makhachhang = a.Makhachhang,
+                                  Trangthai = a.Trangthai,
+                                  Tentrangthai = a.Trangthai == 1 ? "Chưa sử dụng" : "Đã qua sử dụng",
+                                  Tenkhachhang = db.Khachhangs.Where(x => x.Makhachhang == a.Makhachhang).FirstOrDefault().Ten ?? "Không rõ"
+                              }).ToList();
+            return Json(new { success = true, data = listHoadon }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

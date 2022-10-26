@@ -52,12 +52,12 @@
                                                     <td>@m.Code</td>
                                                     <td>@m.Tinhtrang</td>
                                                     <td>@m.Sodu</td>
-                                                    @if (m.Maloai == "01")
+                                                    @if (m.Maloai.Trim() == "01")
                                                     {
                                                         <td>ADMIN</td>
 
                                                     }
-                                                    else if (m.Maloai == "02")
+                                                    else if (m.Maloai.Trim() == "02")
                                                     {
                                                         <td>KHÁCH HÀNG</td>
 

@@ -66,7 +66,7 @@ namespace QLXeBuyt.Models
     #endregion
 		
 		public LinqDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["QLXeBusConnectionString1"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["QLXeBusConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}

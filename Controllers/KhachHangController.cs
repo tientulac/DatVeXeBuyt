@@ -24,6 +24,7 @@ namespace QLXeBuyt.Controllers
                 _khachhang.CCCD = req.CCCD;
                 _khachhang.TheHSSV = req.TheHSSV;
                 _khachhang.Gioitinh = req.Gioitinh;
+                _khachhang.Diachi = req.Diachi;
                 db.SubmitChanges();
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
@@ -77,6 +78,25 @@ namespace QLXeBuyt.Controllers
                                  }).ToList();
             ViewBag.ListKhachHang = listKhachHang;
             return View();
+        }
+
+        public ActionResult List()
+        {
+            var listKhachHang = (from a in db.Khachhangs.Where(k => db.Taikhoans.Where(t => t.Id_Taikhoan == k.Id_Taikhoan).FirstOrDefault().Maloai == "02")
+                                 select new KhachHangDTO
+                                 {
+                                     Makhachhang = a.Makhachhang,
+                                     Ten = a.Ten,
+                                     Ngaysinh = a.Ngaysinh,
+                                     CCCD = a.CCCD,
+                                     TheHSSV = a.TheHSSV,
+                                     Gioitinh = a.Gioitinh,
+                                     Diachi = a.Diachi,
+                                     Id_Taikhoan = a.Id_Taikhoan,
+                                     Tentaikhoan = db.Taikhoans.Where(x => x.Id_Taikhoan == a.Id_Taikhoan).FirstOrDefault().Tentaikhoan ?? "Không xác định",
+                                     Tengioitinh = a.Gioitinh == true ? "Nam" : "Nữ"
+                                 }).ToList();
+            return Json(new { success = true, data = listKhachHang }, JsonRequestBehavior.AllowGet);
         }
     }
 }

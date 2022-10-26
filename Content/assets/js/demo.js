@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 // Cicle Chart
 Circles.create({
 	id:           'task-complete',
@@ -18,8 +18,8 @@ Circles.create({
 //Notify
 $.notify({
 	icon: 'flaticon-alarm-1',
-	title: 'JavaFlorist Shop',
-	message: 'Have a nice day ^^',
+	title: 'QL Xe Buýt',
+	message: 'Trang quản lí admin ^^',
 },{
 	type: 'secondary',
 	placement: {

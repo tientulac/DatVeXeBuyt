@@ -294,7 +294,7 @@
 <div class="wrapper fadeInDown">
     <div id="formContent">
         <!-- Tabs Titles -->
-        <h2 class="active"> Sign In </h2>
+        <h2 class="active"> ĐĂNG NHẬP </h2>
 
         <!-- Icon -->
         <div class="fadeIn first">
@@ -304,9 +304,9 @@
 
         <!-- Login Form -->
         <form class="form-horizontal">
-            <input type="text" id="username" class="fadeIn second" placeholder="User name">
-            <input type="password" id="password" class="fadeIn third" placeholder="Password">
-            <input type="button" class="fadeIn fourth" value="Log In" onclick="login()">
+            <input type="text" id="username" class="fadeIn second" placeholder="Tên đăng nhập">
+            <input type="password" id="password" class="fadeIn third" placeholder="Mật khẩu">
+            <input type="button" class="fadeIn fourth" value="Đăng nhập" onclick="login()">
         </form>
     </div>
 </div>
@@ -336,34 +336,33 @@
     }
 
     login = () => {
-        window.location.assign('../Dashboard/Index');
-        //var reqUser = {
-        //    UserName: $('#username').val(),
-        //    PassWord: $('#password').val(),
-        //}
-        //postData('../Account/Login', reqUser)
-        //    .then((data) => {
-        //        console.log(data);
-        //        if (data.success) {
-        //            var userInfo = {
-        //                UserId: data.data.UserId,
-        //                Admin: data.data.Admin,
-        //                UserName: data.data.UserName,
-        //                Token: data.token
-        //            };
-        //            localStorage.setItem("UserInfo", JSON.stringify(userInfo));
-        //            if (userInfo.Admin) {
-        //                toastr.success('Successfully !');
-        //                window.location.assign('../Dashboard/Index');
-        //            }
-        //            else {
-        //                toastr.warning('This account has no role ADMIN !');
-        //            }
-        //        }
-        //        else {
-        //            toastr.warning('Wrong password or username !');
-        //        }
-        //    });
+        var req = {
+            Tentaikhoan: $('#username').val(),
+            Matkhau: $('#password').val(),
+        }
+        postData('../TaiKhoan/Login', req)
+            .then((data) => {
+                console.log(data);
+                if (data.success) {
+                    var userInfo = {
+                        Id_Taikhoan: data.data.Id_Taikhoan,
+                        Maloai: data.data.Maloai.trim(),
+                        Tentaikhoan: data.data.Tentaikhoan.trim(),
+                        Token: data.token
+                    };
+                    localStorage.setItem("UserInfo", JSON.stringify(userInfo));
+                    if (userInfo.Maloai == '01' || userInfo.Maloai == '03') {
+                        toastr.success('Successfully !');
+                        window.location.assign('../Dashboard/Index');
+                    }
+                    else {
+                        toastr.warning('This account has no role ADMIN !');
+                    }
+                }
+                else {
+                    toastr.warning('Wrong password or username !');
+                }
+            });
     }
 
 </script>

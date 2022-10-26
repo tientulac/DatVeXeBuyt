@@ -108,5 +108,26 @@ namespace QLXeBuyt.Controllers
             ViewBag.ListNhanVien = listNhanVien;
             return View();
         }
+
+        public ActionResult List()
+        {
+            var listNhanVien = (from a in db.Nhanviens.Where(k => db.Taikhoans.Where(t => t.Id_Taikhoan == k.Id_Taikhoan).FirstOrDefault().Maloai == "03")
+                                select new NhanVienDTO
+                                {
+                                    Manhanvien = a.Manhanvien,
+                                    Ten = a.Ten,
+                                    Ngaysinh = a.Ngaysinh,
+                                    Diachi = a.Diachi,
+                                    Gioitinh = a.Gioitinh,
+                                    Ngayvaolam = a.Ngayvaolam,
+                                    Chucvu = a.Chucvu,
+                                    Luong = a.Luong,
+                                    CCCD = a.CCCD,
+                                    Id_Taikhoan = a.Id_Taikhoan,
+                                    Tentaikhoan = db.Taikhoans.Where(x => x.Id_Taikhoan == a.Id_Taikhoan).FirstOrDefault().Tentaikhoan ?? "Không xác định",
+                                    Tengioitinh = a.Gioitinh == true ? "Nam" : "Nữ"
+                                }).ToList();
+            return Json(new { success = true, data = listNhanVien }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
