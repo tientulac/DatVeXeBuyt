@@ -56,5 +56,31 @@ namespace QLXeBuyt.Controllers
             ViewBag.ListTaiKhoan = db.Taikhoans.ToList();
             return View();
         }
+
+        public ActionResult Login(Taikhoan req)
+        {
+            var check = db.Taikhoans.Where(x => x.Tentaikhoan == req.Tentaikhoan && x.Matkhau == req.Matkhau);
+            if (check.Any())
+            {
+                var _taikhoan = (from a in db.Taikhoans.Where(x => x.Id_Taikhoan == check.FirstOrDefault().Id_Taikhoan)
+                                 select new TaiKhoanDTO
+                                 {
+                                     Id_Taikhoan = a.Id_Taikhoan,
+                                     Tentaikhoan = a.Tentaikhoan,
+                                     Matkhau = a.Matkhau,
+                                     Email = a.Email,
+                                     Sodienthoai = a.Sodienthoai,
+                                     Code = a.Code.GetValueOrDefault(),
+                                     Tinhtrang = a.Tinhtrang,
+                                     Sodu = (double)a.Sodu.GetValueOrDefault(),
+                                     Maloai = a.Maloai
+                                 }).FirstOrDefault();
+                return Json(new { success = true, data = _taikhoan }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { success = false, data = req }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
