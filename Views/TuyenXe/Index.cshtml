@@ -116,14 +116,16 @@
                                 <label class="required" for="inputEmail4">Thời gian kết thúc</label>
                                 <input type="time" class="form-control contact-method" id="Thoigianketthuc">
                             </div>
-                            <div class="form-group col-md-12">
-                                <label class="required" for="inputEmail4">Lượt đi</label>
-                                <input type="text" class="form-control contact-method" id="Luotdi">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label class="required" for="inputEmail4">Lượt về</label>
-                                <input type="text" class="form-control contact-method" id="Luotve">
-                            </div>
+                            @*<div class="form-group col-md-12">
+                                    <label class="required" for="inputEmail4">Lượt đi</label>
+                                    <input type="text" class="form-control contact-method" id="Luotdi">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="required" for="inputEmail4">Lượt về</label>
+                                    <input type="text" class="form-control contact-method" id="Luotve">
+                                </div>*@
+                            <label style="font-weight: bold" class="col-md-12" for="file_luotdi">Import bằng excel (Lượt đi):</label>
+                            <input type="file" id="file_luotdi" name="file_luotdi"><br><br>
                             <div class="form-group col-md-12">
                                 <label class="required" for="inputEmail4">Loại tuyến</label>
                                 <input type="text" class="form-control contact-method" id="Loaituyen">
@@ -176,6 +178,7 @@
 <script>
     var id_record = 0;
     var dataUpdate = {};
+    var file_luotdi_name = '';
 
     openAddModal = () => {
         id_record = 0;
@@ -214,33 +217,44 @@
         $('#table_tuyenxe').DataTable();
     });
 
-    submit = () => {
-        var req = {
-            Matuyen: id_record,
-            Tuyenso: $('#Tuyenso').val(),
-            Tentuyen: $('#Tentuyen').val(),
-            Thoigianbatdau: $('#Thoigianbatdau').val(),
-            Thoigianketthuc: $('#Thoigianketthuc').val(),
-            Luotdi: $('#Luotdi').val(),
-            Luotve: $('#Luotve').val(),
-            Loaituyen: $('#Loaituyen').val(),
-            Thoigianchay: $('#Thoigianchay').val(),
-            Giancachtuyen: $('#Giancachtuyen').val(),
-            Sochuyen: $('#Sochuyen').val(),
-        }
+    $('#file_luotdi').change(function () {
+        file_luotdi_name = this.files[0].name;
+    })
 
-        postData('/TuyenXe/Save', req)
-            .then((data) => {
-                if (data.success) {
-                    toastr.success('Successfully !');
-                    $('.modal').modal('hide');
-                    window.location.reload();
-                }
-                else {
-                    toastr.warning('Failed !');
-                    $('.modal').modal('hide');
-                }
-            });
+    submit = () => {
+        //var req = {
+        //    Matuyen: id_record,
+        //    Tuyenso: $('#Tuyenso').val(),
+        //    Tentuyen: $('#Tentuyen').val(),
+        //    Thoigianbatdau: $('#Thoigianbatdau').val(),
+        //    Thoigianketthuc: $('#Thoigianketthuc').val(),
+        //    Luotdi: $('#Luotdi').val(),
+        //    Luotve: $('#Luotve').val(),
+        //    Loaituyen: $('#Loaituyen').val(),
+        //    Thoigianchay: $('#Thoigianchay').val(),
+        //    Giancachtuyen: $('#Giancachtuyen').val(),
+        //    Sochuyen: $('#Sochuyen').val(),
+        //}
+
+        //postData('/TuyenXe/Save', req)
+        //    .then((data) => {
+        //        if (data.success) {
+        //            toastr.success('Successfully !');
+        //            $('.modal').modal('hide');
+        //            window.location.reload();
+        //        }
+        //        else {
+        //            toastr.warning('Failed !');
+        //            $('.modal').modal('hide');
+        //        }
+        //    });
+        $.ajax({
+            url: '/ReadFileExcel/UploadToEpPlus?fileName=' + file_luotdi_name + '&soTuyen=' + $('#Tuyenso').val(),
+            type: 'GET',
+            success: function (result) {
+                console.log(result);
+            }
+        });
     }
 
     openDeleteModal = (id) => {
