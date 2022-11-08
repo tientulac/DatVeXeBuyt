@@ -34,6 +34,37 @@ namespace QLXeBuyt.Controllers
             return Json(new { success = true, data = req }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public ActionResult Register(TaiKhoanDTO req)
+        {
+            var _taikhoan = new Taikhoan();
+            var _khachhang = new Khachhang();
+
+            _taikhoan.Email = req.Email;
+            _taikhoan.Sodienthoai = req.Sodienthoai;
+            _taikhoan.Code = req.Code;
+            _taikhoan.Tinhtrang = "Còn hiệu lực";
+            _taikhoan.Sodu = 0;
+            _taikhoan.Maloai = "02";
+            _taikhoan.Tentaikhoan = req.Tentaikhoan;
+            _taikhoan.Matkhau = req.Matkhau;
+            db.Taikhoans.InsertOnSubmit(_taikhoan);
+            db.SubmitChanges();
+
+            _khachhang.Ten = req.Ten;
+            _khachhang.Ngaysinh = req.Ngaysinh;
+            _khachhang.CCCD = req.CCCD;
+            _khachhang.TheHSSV = req.TheHSSV;
+            _khachhang.Gioitinh = req.Gioitinh;
+            _khachhang.Diachi = req.Diachi;
+            _khachhang.Id_Taikhoan = _taikhoan.Id_Taikhoan;
+            db.SubmitChanges();
+
+            db.Khachhangs.InsertOnSubmit(_khachhang);
+            db.SubmitChanges();
+            return Json(new { success = true, data = req }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Delete(int makhachhang)
         {
             var _khachhang = db.Khachhangs.Where(M => M.Makhachhang == makhachhang).FirstOrDefault();

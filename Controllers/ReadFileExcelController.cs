@@ -9,7 +9,9 @@ namespace QLXeBuyt.Controllers
 {
     public class ReadFileExcelController : Controller
     {
-        public ActionResult UploadTuyenXeToEpPlus(string fileName, string soTuyen)
+        private LinqDataContext db = new LinqDataContext();
+
+        public ActionResult UploadTuyenXeToEpPlus(string fileName, string soTuyen, string soChuyen)
         {
             try
             {
@@ -20,21 +22,35 @@ namespace QLXeBuyt.Controllers
 
                 using (var package = new ExcelPackage(new FileInfo(FilePath)))
                 {
-                    ExcelWorksheet workSheet = package.Workbook.Worksheets["06"];
+                    ExcelWorksheet workSheet = package.Workbook.Worksheets[soChuyen];
                     var totalRows = workSheet.Dimension.Rows;
+                    var listTuyen = db.Tuyenxes.Where(x => x.Sochuyen == Int16.Parse(soChuyen) && x.Tuyenso == Int16.Parse(soTuyen)).ToList();
+                    db.Tuyenxes.DeleteAllOnSubmit(listTuyen);
+                    db.SubmitChanges();
 
-                    for (int i = 2; i <= totalRows; i++)
+                    for (int i = 2; i < totalRows; i++)
                     {
-                        var _soTuyen = workSheet.Cells[i, 4].Value.ToString().Trim();
-                        if (_soTuyen == soTuyen)
+                        if (workSheet.Cells[i, 1].Value == null)
                         {
-                            var _tenTuyen = workSheet.Cells[i, 2].Value.ToString().Trim();
-                            var _maTuyen = workSheet.Cells[i, 3].Value.ToString().Trim();
-                            var _luotDi = workSheet.Cells[i, 5].Value.ToString().Trim();
-                            var _luotVe = workSheet.Cells[i, 6].Value.ToString().Trim();
-                            return Json(new { success = true, luotdi = _luotDi, luotve = _luotVe, matuyen = _maTuyen, tentuyen = _tenTuyen }, JsonRequestBehavior.AllowGet);
+                            break;
                         }
+                        Random rnd = new Random();
+                        Tuyenxe tx = new Tuyenxe();
+                        tx.Tuyenso = Int16.Parse(workSheet.Cells[i, 1].Value.ToString());
+                        tx.Tentuyen = workSheet.Cells[i, 2].Value.ToString().Trim();
+                        tx.Thoigianbatdau = new TimeSpan(rnd.Next(3, 6), 0, 0);
+                        tx.Thoigianketthuc = new TimeSpan(rnd.Next(3, 6), 0, 0);
+                        tx.Luotdi = workSheet.Cells[i, 5].Value.ToString().Trim();
+                        tx.Luotve = workSheet.Cells[i, 6].Value.ToString().Trim();
+                        tx.Loaituyen = workSheet.Cells[i, 7].Value.ToString().Trim();
+                        tx.Thoigianchay = workSheet.Cells[i, 8].Value.ToString().Trim();
+                        tx.Giancachtuyen = workSheet.Cells[i, 9].Value.ToString().Trim();
+                        tx.Sochuyen = Int16.Parse(workSheet.Cells[i, 10].Value.ToString());
+
+                        db.Tuyenxes.InsertOnSubmit(tx);
+                        db.SubmitChanges();
                     }
+                    return Json(new { success = true }, JsonRequestBehavior.AllowGet);
                 }
 
             }

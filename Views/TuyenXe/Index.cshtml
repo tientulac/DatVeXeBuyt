@@ -102,20 +102,20 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label class="required" for="inputEmail4">Số tuyến</label>
-                                <input type="number" class="form-control contact-method" id="Tuyenso" placeholder="Nhập số tuyến">
+                                <input type="text" class="form-control contact-method" id="Tuyenso" placeholder="Nhập số tuyến">
                             </div>
-                            <div class="form-group col-md-12">
-                                <label class="required" for="inputEmail4">Tên tuyến</label>
-                                <input type="text" class="form-control contact-method" id="Tentuyen" placeholder="Nhập tên tuyến">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label class="required" for="inputEmail4">Thời gian bắt đầu</label>
-                                <input type="time" class="form-control contact-method" id="Thoigianbatdau">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label class="required" for="inputEmail4">Thời gian kết thúc</label>
-                                <input type="time" class="form-control contact-method" id="Thoigianketthuc">
-                            </div>
+                            @*<div class="form-group col-md-12">
+                                    <label class="required" for="inputEmail4">Tên tuyến</label>
+                                    <input type="text" class="form-control contact-method" id="Tentuyen" placeholder="Nhập tên tuyến">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="required" for="inputEmail4">Thời gian bắt đầu</label>
+                                    <input type="time" class="form-control contact-method" id="Thoigianbatdau">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="required" for="inputEmail4">Thời gian kết thúc</label>
+                                    <input type="time" class="form-control contact-method" id="Thoigianketthuc">
+                                </div>*@
                             @*<div class="form-group col-md-12">
                                     <label class="required" for="inputEmail4">Lượt đi</label>
                                     <input type="text" class="form-control contact-method" id="Luotdi">
@@ -126,18 +126,18 @@
                                 </div>*@
                             <label style="font-weight: bold" class="col-md-12" for="file_luotdi">Import bằng excel (Lượt đi):</label>
                             <input type="file" id="file_luotdi" name="file_luotdi"><br><br>
-                            <div class="form-group col-md-12">
-                                <label class="required" for="inputEmail4">Loại tuyến</label>
-                                <input type="text" class="form-control contact-method" id="Loaituyen">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label class="required" for="inputEmail4">Thời gian chạy</label>
-                                <input type="text" class="form-control contact-method" id="Thoigianchay">
-                            </div>
-                            <div class="form-group col-md-12">
-                                <label class="required" for="inputEmail4">Giãn cách tuyến</label>
-                                <input type="text" class="form-control contact-method" id="Giancachtuyen">
-                            </div>
+                            @*<div class="form-group col-md-12">
+                                    <label class="required" for="inputEmail4">Loại tuyến</label>
+                                    <input type="text" class="form-control contact-method" id="Loaituyen">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="required" for="inputEmail4">Thời gian chạy</label>
+                                    <input type="text" class="form-control contact-method" id="Thoigianchay">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label class="required" for="inputEmail4">Giãn cách tuyến</label>
+                                    <input type="text" class="form-control contact-method" id="Giancachtuyen">
+                                </div>*@
                             <div class="form-group col-md-12">
                                 <label class="required" for="inputEmail4">Số chuyến</label>
                                 <input type="text" class="form-control contact-method" id="Sochuyen">
@@ -249,10 +249,12 @@
         //        }
         //    });
         $.ajax({
-            url: '/ReadFileExcel/UploadToEpPlus?fileName=' + file_luotdi_name + '&soTuyen=' + $('#Tuyenso').val(),
+            url: '/ReadFileExcel/UploadTuyenXeToEpPlus?fileName=' + file_luotdi_name + '&soTuyen=' + $('#Tuyenso').val() + '&soChuyen=' + $('#Sochuyen').val(),
             type: 'GET',
             success: function (result) {
-                console.log(result);
+                toastr.success('Successfully !');
+                $('.modal').modal('hide');
+                window.location.reload();
             }
         });
     }

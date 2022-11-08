@@ -30,6 +30,9 @@ namespace QLXeBuyt.Models
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
+    partial void InsertCT_Hoadon(CT_Hoadon instance);
+    partial void UpdateCT_Hoadon(CT_Hoadon instance);
+    partial void DeleteCT_Hoadon(CT_Hoadon instance);
     partial void InsertXe(Xe instance);
     partial void UpdateXe(Xe instance);
     partial void DeleteXe(Xe instance);
@@ -214,11 +217,20 @@ namespace QLXeBuyt.Models
 				return this.GetTable<VeXe>();
 			}
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.sp_DanhSachVe")]
+		public ISingleResult<sp_DanhSachVeResult> sp_DanhSachVe([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> makhachhang)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), makhachhang);
+			return ((ISingleResult<sp_DanhSachVeResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CT_Hoadon")]
-	public partial class CT_Hoadon
+	public partial class CT_Hoadon : INotifyPropertyChanging, INotifyPropertyChanged
 	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
 		private int _Mave;
 		
@@ -230,8 +242,32 @@ namespace QLXeBuyt.Models
 		
 		private string _QRcode;
 		
+		private int _Id_CTHoadon;
+		
+		private EntityRef<VeXe> _VeXe;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnMaveChanging(int value);
+    partial void OnMaveChanged();
+    partial void OnMaHDChanging(int value);
+    partial void OnMaHDChanged();
+    partial void OnTrangthaiChanging(System.Nullable<int> value);
+    partial void OnTrangthaiChanged();
+    partial void OnSoluotsudungChanging(System.Nullable<int> value);
+    partial void OnSoluotsudungChanged();
+    partial void OnQRcodeChanging(string value);
+    partial void OnQRcodeChanged();
+    partial void OnId_CTHoadonChanging(int value);
+    partial void OnId_CTHoadonChanged();
+    #endregion
+		
 		public CT_Hoadon()
 		{
+			this._VeXe = default(EntityRef<VeXe>);
+			OnCreated();
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mave", DbType="Int NOT NULL")]
@@ -245,7 +281,15 @@ namespace QLXeBuyt.Models
 			{
 				if ((this._Mave != value))
 				{
+					if (this._VeXe.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMaveChanging(value);
+					this.SendPropertyChanging();
 					this._Mave = value;
+					this.SendPropertyChanged("Mave");
+					this.OnMaveChanged();
 				}
 			}
 		}
@@ -261,7 +305,11 @@ namespace QLXeBuyt.Models
 			{
 				if ((this._MaHD != value))
 				{
+					this.OnMaHDChanging(value);
+					this.SendPropertyChanging();
 					this._MaHD = value;
+					this.SendPropertyChanged("MaHD");
+					this.OnMaHDChanged();
 				}
 			}
 		}
@@ -277,7 +325,11 @@ namespace QLXeBuyt.Models
 			{
 				if ((this._Trangthai != value))
 				{
+					this.OnTrangthaiChanging(value);
+					this.SendPropertyChanging();
 					this._Trangthai = value;
+					this.SendPropertyChanged("Trangthai");
+					this.OnTrangthaiChanged();
 				}
 			}
 		}
@@ -293,7 +345,11 @@ namespace QLXeBuyt.Models
 			{
 				if ((this._Soluotsudung != value))
 				{
+					this.OnSoluotsudungChanging(value);
+					this.SendPropertyChanging();
 					this._Soluotsudung = value;
+					this.SendPropertyChanged("Soluotsudung");
+					this.OnSoluotsudungChanged();
 				}
 			}
 		}
@@ -309,8 +365,86 @@ namespace QLXeBuyt.Models
 			{
 				if ((this._QRcode != value))
 				{
+					this.OnQRcodeChanging(value);
+					this.SendPropertyChanging();
 					this._QRcode = value;
+					this.SendPropertyChanged("QRcode");
+					this.OnQRcodeChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_CTHoadon", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id_CTHoadon
+		{
+			get
+			{
+				return this._Id_CTHoadon;
+			}
+			set
+			{
+				if ((this._Id_CTHoadon != value))
+				{
+					this.OnId_CTHoadonChanging(value);
+					this.SendPropertyChanging();
+					this._Id_CTHoadon = value;
+					this.SendPropertyChanged("Id_CTHoadon");
+					this.OnId_CTHoadonChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="VeXe_CT_Hoadon", Storage="_VeXe", ThisKey="Mave", OtherKey="Mave", IsForeignKey=true)]
+		public VeXe VeXe
+		{
+			get
+			{
+				return this._VeXe.Entity;
+			}
+			set
+			{
+				VeXe previousValue = this._VeXe.Entity;
+				if (((previousValue != value) 
+							|| (this._VeXe.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._VeXe.Entity = null;
+						previousValue.CT_Hoadons.Remove(this);
+					}
+					this._VeXe.Entity = value;
+					if ((value != null))
+					{
+						value.CT_Hoadons.Add(this);
+						this._Mave = value.Mave;
+					}
+					else
+					{
+						this._Mave = default(int);
+					}
+					this.SendPropertyChanged("VeXe");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
 	}
@@ -739,13 +873,13 @@ namespace QLXeBuyt.Models
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _MaHD;
-		
 		private System.Nullable<System.DateTime> _Ngaymua;
 		
 		private int _Makhachhang;
 		
 		private System.Nullable<int> _Trangthai;
+		
+		private int _MaHD;
 		
 		private EntityRef<Khachhang> _Khachhang;
 		
@@ -753,40 +887,20 @@ namespace QLXeBuyt.Models
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnMaHDChanging(int value);
-    partial void OnMaHDChanged();
     partial void OnNgaymuaChanging(System.Nullable<System.DateTime> value);
     partial void OnNgaymuaChanged();
     partial void OnMakhachhangChanging(int value);
     partial void OnMakhachhangChanged();
     partial void OnTrangthaiChanging(System.Nullable<int> value);
     partial void OnTrangthaiChanged();
+    partial void OnMaHDChanging(int value);
+    partial void OnMaHDChanged();
     #endregion
 		
 		public Hoadon()
 		{
 			this._Khachhang = default(EntityRef<Khachhang>);
 			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaHD", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int MaHD
-		{
-			get
-			{
-				return this._MaHD;
-			}
-			set
-			{
-				if ((this._MaHD != value))
-				{
-					this.OnMaHDChanging(value);
-					this.SendPropertyChanging();
-					this._MaHD = value;
-					this.SendPropertyChanged("MaHD");
-					this.OnMaHDChanged();
-				}
-			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ngaymua", DbType="DateTime")]
@@ -849,6 +963,26 @@ namespace QLXeBuyt.Models
 					this._Trangthai = value;
 					this.SendPropertyChanged("Trangthai");
 					this.OnTrangthaiChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaHD", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int MaHD
+		{
+			get
+			{
+				return this._MaHD;
+			}
+			set
+			{
+				if ((this._MaHD != value))
+				{
+					this.OnMaHDChanging(value);
+					this.SendPropertyChanging();
+					this._MaHD = value;
+					this.SendPropertyChanged("MaHD");
+					this.OnMaHDChanged();
 				}
 			}
 		}
@@ -2797,6 +2931,8 @@ namespace QLXeBuyt.Models
 		
 		private System.Nullable<decimal> _Giatien;
 		
+		private EntitySet<CT_Hoadon> _CT_Hoadons;
+		
 		private EntityRef<Tuyenxe> _Tuyenxe;
 		
     #region Extensibility Method Definitions
@@ -2823,6 +2959,7 @@ namespace QLXeBuyt.Models
 		
 		public VeXe()
 		{
+			this._CT_Hoadons = new EntitySet<CT_Hoadon>(new Action<CT_Hoadon>(this.attach_CT_Hoadons), new Action<CT_Hoadon>(this.detach_CT_Hoadons));
 			this._Tuyenxe = default(EntityRef<Tuyenxe>);
 			OnCreated();
 		}
@@ -2991,6 +3128,19 @@ namespace QLXeBuyt.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="VeXe_CT_Hoadon", Storage="_CT_Hoadons", ThisKey="Mave", OtherKey="Mave")]
+		public EntitySet<CT_Hoadon> CT_Hoadons
+		{
+			get
+			{
+				return this._CT_Hoadons;
+			}
+			set
+			{
+				this._CT_Hoadons.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Tuyenxe_VeXe", Storage="_Tuyenxe", ThisKey="Matuyen", OtherKey="Matuyen", IsForeignKey=true)]
 		public Tuyenxe Tuyenxe
 		{
@@ -3042,6 +3192,188 @@ namespace QLXeBuyt.Models
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_CT_Hoadons(CT_Hoadon entity)
+		{
+			this.SendPropertyChanging();
+			entity.VeXe = this;
+		}
+		
+		private void detach_CT_Hoadons(CT_Hoadon entity)
+		{
+			this.SendPropertyChanging();
+			entity.VeXe = null;
+		}
+	}
+	
+	public partial class sp_DanhSachVeResult
+	{
+		
+		private System.Nullable<System.DateTime> _Ngaymua;
+		
+		private int _Makhachhang;
+		
+		private System.Nullable<int> _Trangthai;
+		
+		private int _MaHD;
+		
+		private System.Nullable<int> _Mave;
+		
+		private System.Nullable<int> _Trangthai1;
+		
+		private System.Nullable<int> _Soluotsudung;
+		
+		private string _QRcode;
+		
+		private System.Nullable<int> _Id_CTHoadon;
+		
+		public sp_DanhSachVeResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ngaymua", DbType="DateTime")]
+		public System.Nullable<System.DateTime> Ngaymua
+		{
+			get
+			{
+				return this._Ngaymua;
+			}
+			set
+			{
+				if ((this._Ngaymua != value))
+				{
+					this._Ngaymua = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Makhachhang", DbType="Int NOT NULL")]
+		public int Makhachhang
+		{
+			get
+			{
+				return this._Makhachhang;
+			}
+			set
+			{
+				if ((this._Makhachhang != value))
+				{
+					this._Makhachhang = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Trangthai", DbType="Int")]
+		public System.Nullable<int> Trangthai
+		{
+			get
+			{
+				return this._Trangthai;
+			}
+			set
+			{
+				if ((this._Trangthai != value))
+				{
+					this._Trangthai = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MaHD", DbType="Int NOT NULL")]
+		public int MaHD
+		{
+			get
+			{
+				return this._MaHD;
+			}
+			set
+			{
+				if ((this._MaHD != value))
+				{
+					this._MaHD = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Mave", DbType="Int")]
+		public System.Nullable<int> Mave
+		{
+			get
+			{
+				return this._Mave;
+			}
+			set
+			{
+				if ((this._Mave != value))
+				{
+					this._Mave = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Trangthai1", DbType="Int")]
+		public System.Nullable<int> Trangthai1
+		{
+			get
+			{
+				return this._Trangthai1;
+			}
+			set
+			{
+				if ((this._Trangthai1 != value))
+				{
+					this._Trangthai1 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Soluotsudung", DbType="Int")]
+		public System.Nullable<int> Soluotsudung
+		{
+			get
+			{
+				return this._Soluotsudung;
+			}
+			set
+			{
+				if ((this._Soluotsudung != value))
+				{
+					this._Soluotsudung = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_QRcode", DbType="NVarChar(MAX)")]
+		public string QRcode
+		{
+			get
+			{
+				return this._QRcode;
+			}
+			set
+			{
+				if ((this._QRcode != value))
+				{
+					this._QRcode = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id_CTHoadon", DbType="Int")]
+		public System.Nullable<int> Id_CTHoadon
+		{
+			get
+			{
+				return this._Id_CTHoadon;
+			}
+			set
+			{
+				if ((this._Id_CTHoadon != value))
+				{
+					this._Id_CTHoadon = value;
+				}
 			}
 		}
 	}

@@ -5,9 +5,8 @@ using System.Web;
 
 namespace QLXeBuyt.Models.DTOs
 {
-    public class TaiKhoanDTO
+    public class TaiKhoanDTO : Khachhang
     {
-        public int Id_Taikhoan { get; set; }
         public string Tentaikhoan { get; set; }
         public string Matkhau { get; set; }
         public string Email { get; set; }

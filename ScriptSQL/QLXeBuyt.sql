@@ -1,96 +1,96 @@
 USE [QLXeBus]
 GO
-ALTER TABLE [dbo].[Xe] DROP CONSTRAINT [FK_Xe_Tuyenxe]
+/****** Object:  StoredProcedure [dbo].[sp_DanhSachVe]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP PROCEDURE IF EXISTS [dbo].[sp_DanhSachVe]
 GO
-ALTER TABLE [dbo].[VeXe] DROP CONSTRAINT [FK_VeXe_Tuyenxe]
-GO
-ALTER TABLE [dbo].[Phanhoi] DROP CONSTRAINT [FK_Phanhoi_Taikhoan]
-GO
-ALTER TABLE [dbo].[Nhanvien] DROP CONSTRAINT [FK_Nhanvien_Taikhoan]
-GO
-ALTER TABLE [dbo].[Khachhang] DROP CONSTRAINT [FK_Khachhang_Taikhoan]
-GO
-ALTER TABLE [dbo].[Hoadon] DROP CONSTRAINT [FK_Hoadon_Khachhang]
-GO
-ALTER TABLE [dbo].[CT_Xe] DROP CONSTRAINT [FK_CT_Xe_Xe]
-GO
-ALTER TABLE [dbo].[CT_Xe] DROP CONSTRAINT [FK_CT_Xe_Nhanvien]
-GO
-ALTER TABLE [dbo].[CT_Tuyenxe] DROP CONSTRAINT [FK_CT_Tuyenxe_Tuyenxe]
-GO
-ALTER TABLE [dbo].[CT_Tuyenxe] DROP CONSTRAINT [FK_CT_Tuyenxe_Tramxe]
-GO
-ALTER TABLE [dbo].[CT_Ngaylamviec] DROP CONSTRAINT [FK_CT_Ngaylamviec_Xe]
-GO
-ALTER TABLE [dbo].[CT_Ngaylamviec] DROP CONSTRAINT [FK_CT_Ngaylamviec_Thoigianlamviec]
-GO
-ALTER TABLE [dbo].[CT_Ngaylamviec] DROP CONSTRAINT [FK_CT_Ngaylamviec_Nhanvien]
-GO
-ALTER TABLE [dbo].[CT_Hoadon] DROP CONSTRAINT [FK_CT_Hoadon_VeXe]
-GO
-ALTER TABLE [dbo].[CT_Hoadon] DROP CONSTRAINT [FK_CT_Hoadon_Hoadon]
-GO
-/****** Object:  Table [dbo].[Xe]    Script Date: 26/10/2022 5:08:45 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Xe]') AND type in (N'U'))
-DROP TABLE [dbo].[Xe]
+ALTER TABLE [dbo].[Xe] DROP CONSTRAINT IF EXISTS [FK_Xe_Tuyenxe]
 GO
-/****** Object:  Table [dbo].[VeXe]    Script Date: 26/10/2022 5:08:45 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[VeXe]') AND type in (N'U'))
-DROP TABLE [dbo].[VeXe]
+ALTER TABLE [dbo].[VeXe] DROP CONSTRAINT IF EXISTS [FK_VeXe_Tuyenxe]
 GO
-/****** Object:  Table [dbo].[Tuyenxe]    Script Date: 26/10/2022 5:08:45 PM ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Tuyenxe]') AND type in (N'U'))
-DROP TABLE [dbo].[Tuyenxe]
-GO
-/****** Object:  Table [dbo].[Tramxe]    Script Date: 26/10/2022 5:08:45 PM ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Tramxe]') AND type in (N'U'))
-DROP TABLE [dbo].[Tramxe]
-GO
-/****** Object:  Table [dbo].[Thoigianlamviec]    Script Date: 26/10/2022 5:08:45 PM ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Thoigianlamviec]') AND type in (N'U'))
-DROP TABLE [dbo].[Thoigianlamviec]
-GO
-/****** Object:  Table [dbo].[Taikhoan]    Script Date: 26/10/2022 5:08:45 PM ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Taikhoan]') AND type in (N'U'))
-DROP TABLE [dbo].[Taikhoan]
-GO
-/****** Object:  Table [dbo].[Phanhoi]    Script Date: 26/10/2022 5:08:45 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Phanhoi]') AND type in (N'U'))
-DROP TABLE [dbo].[Phanhoi]
+ALTER TABLE [dbo].[Phanhoi] DROP CONSTRAINT IF EXISTS [FK_Phanhoi_Taikhoan]
 GO
-/****** Object:  Table [dbo].[Nhanvien]    Script Date: 26/10/2022 5:08:45 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Nhanvien]') AND type in (N'U'))
-DROP TABLE [dbo].[Nhanvien]
+ALTER TABLE [dbo].[Nhanvien] DROP CONSTRAINT IF EXISTS [FK_Nhanvien_Taikhoan]
 GO
-/****** Object:  Table [dbo].[Loaitaikhoan]    Script Date: 26/10/2022 5:08:45 PM ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Loaitaikhoan]') AND type in (N'U'))
-DROP TABLE [dbo].[Loaitaikhoan]
-GO
-/****** Object:  Table [dbo].[Khachhang]    Script Date: 26/10/2022 5:08:45 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Khachhang]') AND type in (N'U'))
-DROP TABLE [dbo].[Khachhang]
+ALTER TABLE [dbo].[Khachhang] DROP CONSTRAINT IF EXISTS [FK_Khachhang_Taikhoan]
 GO
-/****** Object:  Table [dbo].[Hoadon]    Script Date: 26/10/2022 5:08:45 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Hoadon]') AND type in (N'U'))
-DROP TABLE [dbo].[Hoadon]
+ALTER TABLE [dbo].[Hoadon] DROP CONSTRAINT IF EXISTS [FK_Hoadon_Khachhang]
 GO
-/****** Object:  Table [dbo].[CT_Xe]    Script Date: 26/10/2022 5:08:45 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CT_Xe]') AND type in (N'U'))
-DROP TABLE [dbo].[CT_Xe]
+ALTER TABLE [dbo].[CT_Xe] DROP CONSTRAINT IF EXISTS [FK_CT_Xe_Xe]
 GO
-/****** Object:  Table [dbo].[CT_Tuyenxe]    Script Date: 26/10/2022 5:08:45 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CT_Xe]') AND type in (N'U'))
+ALTER TABLE [dbo].[CT_Xe] DROP CONSTRAINT IF EXISTS [FK_CT_Xe_Nhanvien]
+GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CT_Tuyenxe]') AND type in (N'U'))
-DROP TABLE [dbo].[CT_Tuyenxe]
+ALTER TABLE [dbo].[CT_Tuyenxe] DROP CONSTRAINT IF EXISTS [FK_CT_Tuyenxe_Tuyenxe]
 GO
-/****** Object:  Table [dbo].[CT_Ngaylamviec]    Script Date: 26/10/2022 5:08:45 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CT_Tuyenxe]') AND type in (N'U'))
+ALTER TABLE [dbo].[CT_Tuyenxe] DROP CONSTRAINT IF EXISTS [FK_CT_Tuyenxe_Tramxe]
+GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CT_Ngaylamviec]') AND type in (N'U'))
-DROP TABLE [dbo].[CT_Ngaylamviec]
+ALTER TABLE [dbo].[CT_Ngaylamviec] DROP CONSTRAINT IF EXISTS [FK_CT_Ngaylamviec_Xe]
 GO
-/****** Object:  Table [dbo].[CT_Hoadon]    Script Date: 26/10/2022 5:08:45 PM ******/
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CT_Ngaylamviec]') AND type in (N'U'))
+ALTER TABLE [dbo].[CT_Ngaylamviec] DROP CONSTRAINT IF EXISTS [FK_CT_Ngaylamviec_Thoigianlamviec]
+GO
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CT_Ngaylamviec]') AND type in (N'U'))
+ALTER TABLE [dbo].[CT_Ngaylamviec] DROP CONSTRAINT IF EXISTS [FK_CT_Ngaylamviec_Nhanvien]
+GO
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[CT_Hoadon]') AND type in (N'U'))
-DROP TABLE [dbo].[CT_Hoadon]
+ALTER TABLE [dbo].[CT_Hoadon] DROP CONSTRAINT IF EXISTS [FK_CT_Hoadon_VeXe]
 GO
-/****** Object:  Table [dbo].[CT_Hoadon]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[Xe]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[Xe]
+GO
+/****** Object:  Table [dbo].[VeXe]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[VeXe]
+GO
+/****** Object:  Table [dbo].[Tuyenxe]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[Tuyenxe]
+GO
+/****** Object:  Table [dbo].[Tramxe]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[Tramxe]
+GO
+/****** Object:  Table [dbo].[Thoigianlamviec]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[Thoigianlamviec]
+GO
+/****** Object:  Table [dbo].[Taikhoan]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[Taikhoan]
+GO
+/****** Object:  Table [dbo].[Phanhoi]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[Phanhoi]
+GO
+/****** Object:  Table [dbo].[Nhanvien]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[Nhanvien]
+GO
+/****** Object:  Table [dbo].[Loaitaikhoan]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[Loaitaikhoan]
+GO
+/****** Object:  Table [dbo].[Khachhang]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[Khachhang]
+GO
+/****** Object:  Table [dbo].[Hoadon]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[Hoadon]
+GO
+/****** Object:  Table [dbo].[CT_Xe]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[CT_Xe]
+GO
+/****** Object:  Table [dbo].[CT_Tuyenxe]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[CT_Tuyenxe]
+GO
+/****** Object:  Table [dbo].[CT_Ngaylamviec]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[CT_Ngaylamviec]
+GO
+/****** Object:  Table [dbo].[CT_Hoadon]    Script Date: 8/11/2022 2:51:29 PM ******/
+DROP TABLE IF EXISTS [dbo].[CT_Hoadon]
+GO
+/****** Object:  Table [dbo].[CT_Hoadon]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -100,10 +100,15 @@ CREATE TABLE [dbo].[CT_Hoadon](
 	[MaHD] [int] NOT NULL,
 	[Trangthai] [int] NULL,
 	[Soluotsudung] [int] NULL,
-	[QRcode] [nvarchar](max) NULL
+	[QRcode] [nvarchar](max) NULL,
+	[Id_CTHoadon] [int] IDENTITY(1,1) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id_CTHoadon] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CT_Ngaylamviec]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[CT_Ngaylamviec]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -115,7 +120,7 @@ CREATE TABLE [dbo].[CT_Ngaylamviec](
 	[Ngaylamviec] [datetime] NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CT_Tuyenxe]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[CT_Tuyenxe]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -125,7 +130,7 @@ CREATE TABLE [dbo].[CT_Tuyenxe](
 	[Matram] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[CT_Xe]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[CT_Xe]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -135,23 +140,23 @@ CREATE TABLE [dbo].[CT_Xe](
 	[Maxe] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Hoadon]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[Hoadon]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Hoadon](
-	[MaHD] [int] NOT NULL,
 	[Ngaymua] [datetime] NULL,
 	[Makhachhang] [int] NOT NULL,
 	[Trangthai] [int] NULL,
- CONSTRAINT [PK_Hoadon] PRIMARY KEY CLUSTERED 
+	[MaHD] [int] IDENTITY(1,1) NOT NULL,
+PRIMARY KEY CLUSTERED 
 (
 	[MaHD] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Khachhang]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[Khachhang]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -171,7 +176,7 @@ CREATE TABLE [dbo].[Khachhang](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Loaitaikhoan]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[Loaitaikhoan]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -186,7 +191,7 @@ CREATE TABLE [dbo].[Loaitaikhoan](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Nhanvien]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[Nhanvien]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -208,7 +213,7 @@ CREATE TABLE [dbo].[Nhanvien](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Phanhoi]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[Phanhoi]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -224,7 +229,7 @@ CREATE TABLE [dbo].[Phanhoi](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Taikhoan]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[Taikhoan]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -245,7 +250,7 @@ CREATE TABLE [dbo].[Taikhoan](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Thoigianlamviec]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[Thoigianlamviec]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -260,7 +265,7 @@ CREATE TABLE [dbo].[Thoigianlamviec](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tramxe]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[Tramxe]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -277,7 +282,7 @@ CREATE TABLE [dbo].[Tramxe](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tuyenxe]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[Tuyenxe]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -300,7 +305,7 @@ CREATE TABLE [dbo].[Tuyenxe](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[VeXe]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[VeXe]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -320,7 +325,7 @@ CREATE TABLE [dbo].[VeXe](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Xe]    Script Date: 26/10/2022 5:08:45 PM ******/
+/****** Object:  Table [dbo].[Xe]    Script Date: 8/11/2022 2:51:29 PM ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -338,11 +343,6 @@ CREATE TABLE [dbo].[Xe](
 	[MaXe] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[CT_Hoadon]  WITH CHECK ADD  CONSTRAINT [FK_CT_Hoadon_Hoadon] FOREIGN KEY([MaHD])
-REFERENCES [dbo].[Hoadon] ([MaHD])
-GO
-ALTER TABLE [dbo].[CT_Hoadon] CHECK CONSTRAINT [FK_CT_Hoadon_Hoadon]
 GO
 ALTER TABLE [dbo].[CT_Hoadon]  WITH CHECK ADD  CONSTRAINT [FK_CT_Hoadon_VeXe] FOREIGN KEY([Mave])
 REFERENCES [dbo].[VeXe] ([Mave])
@@ -413,4 +413,16 @@ ALTER TABLE [dbo].[Xe]  WITH CHECK ADD  CONSTRAINT [FK_Xe_Tuyenxe] FOREIGN KEY([
 REFERENCES [dbo].[Tuyenxe] ([Matuyen])
 GO
 ALTER TABLE [dbo].[Xe] CHECK CONSTRAINT [FK_Xe_Tuyenxe]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_DanhSachVe]    Script Date: 8/11/2022 2:51:29 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROC [dbo].[sp_DanhSachVe] 
+	@makhachhang INT
+AS
+SELECT Hoadon.*, CT_Hoadon.Mave,CT_Hoadon.Trangthai,CT_Hoadon.Soluotsudung,CT_Hoadon.QRcode,CT_Hoadon.Id_CTHoadon FROM Hoadon
+LEFT JOIN CT_Hoadon ON Hoadon.MaHD = CT_Hoadon.MaHD
+WHERE Hoadon.Makhachhang = @makhachhang
 GO
