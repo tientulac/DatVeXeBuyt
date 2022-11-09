@@ -28,10 +28,11 @@ namespace QLXeBuyt.Controllers
             db.VeXes.InsertOnSubmit(_veXe);
             db.SubmitChanges();
 
+            var maKH = db.Khachhangs.Where(x => x.Id_Taikhoan == req.Id_Taikhoan).FirstOrDefault().Makhachhang;
             var _hoadon = new Hoadon();
             _hoadon.Ngaymua = DateTime.Now;
             _hoadon.Trangthai = 1;
-            _hoadon.Makhachhang = req.Id_Taikhoan;
+            _hoadon.Makhachhang = maKH;
             db.Hoadons.InsertOnSubmit(_hoadon);
             db.SubmitChanges();
 
