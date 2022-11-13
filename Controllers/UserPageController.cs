@@ -44,6 +44,11 @@ namespace QLXeBuyt.Controllers
             _ctHoadon.QRcode = "{ success = true, Mave =" + _veXe.Mave + ", MaHD = " + _hoadon.MaHD + ", Id_Taikhoan = " + req.Id_Taikhoan + "}";
             db.CT_Hoadons.InsertOnSubmit(_ctHoadon);
             db.SubmitChanges();
+
+            var tk = db.Taikhoans.Where(x => x.Id_Taikhoan == req.Id_Taikhoan).FirstOrDefault();
+            tk.Sodu -= req.Giatien;
+            db.SubmitChanges();
+
             return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
 
@@ -63,6 +68,7 @@ namespace QLXeBuyt.Controllers
             var ma = db.Khachhangs.Where(x => x.Id_Taikhoan == id_TK).FirstOrDefault().Makhachhang;
             ViewBag.ListVe = db.sp_DanhSachVe(ma).ToList() ?? null;
             ViewBag.Khachhang = db.Khachhangs.Where(x => x.Id_Taikhoan == id_TK).FirstOrDefault() ?? null;
+            ViewBag.Sodu = db.Taikhoans.Where(x => x.Id_Taikhoan == id_TK).FirstOrDefault().Sodu ?? 0;
             return View();
         }
 
@@ -82,6 +88,14 @@ namespace QLXeBuyt.Controllers
         {
             var _tramxe = db.Tramxes.Where(M => M.Matram == matram).FirstOrDefault();
             return Json(new { success = true, data = _tramxe }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult NapTien(int id_tk)
+        {
+            var tk = db.Taikhoans.Where(x => x.Id_Taikhoan == id_tk).FirstOrDefault();
+            tk.Sodu += decimal.Parse("50000");
+            db.SubmitChanges();
+            return Json(new { success = true }, JsonRequestBehavior.AllowGet);
         }
     }
 }

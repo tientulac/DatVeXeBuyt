@@ -37,7 +37,7 @@ namespace QLXeBuyt.Controllers
                                   Ngaymua = a.Ngaymua,
                                   Makhachhang = a.Makhachhang,
                                   Trangthai = a.Trangthai,
-                                  Tentrangthai = a.Trangthai == 1 ? "Chưa sử dụng" : "Đã qua sử dụng",
+                                  Tentrangthai = a.Trangthai == 1 ? "Đang sử dụng" : a.Trangthai == 2 ? "Đang chờ thanh toán" : "Đã hết lượt",
                                   Tenkhachhang = db.Khachhangs.Where(x => x.Makhachhang == a.Makhachhang).FirstOrDefault().Ten ?? "Không rõ",
                               }).FirstOrDefault();
             return Json(new { success = true, data = _hoadon }, JsonRequestBehavior.AllowGet);
@@ -51,7 +51,7 @@ namespace QLXeBuyt.Controllers
                                   Ngaymua = a.Ngaymua,
                                   Makhachhang = a.Makhachhang,
                                   Trangthai = a.Trangthai,
-                                  Tentrangthai = a.Trangthai == 1 ? "Chưa sử dụng" : "Đã qua sử dụng",
+                                  Tentrangthai = a.Trangthai == 1 ? "Đang sử dụng" : a.Trangthai == 2 ? "Đang chờ thanh toán" : "Đã hết lượt",
                                   Tenkhachhang = db.Khachhangs.Where(x => x.Makhachhang == a.Makhachhang).FirstOrDefault().Ten ?? "Không rõ"
                               }).ToList();
             ViewBag.ListHoaDon = listHoadon;

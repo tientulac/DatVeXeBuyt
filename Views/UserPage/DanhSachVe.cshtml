@@ -69,7 +69,6 @@
         height: 20px;
         margin-top: 15px;
     }
-
 </style>
 <div class="container">
     <div class="main-body">
@@ -141,6 +140,17 @@
                             </div>
                         </div>
                         <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Số dư</h6>
+                            </div>
+                            <div class="col-sm-3 text-secondary">
+                                @ViewBag.Sodu
+                            </div>
+                            <div class="col-sm-3 text-secondary">
+                                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addModal" onclick="addMoney(@ViewBag.Khachhang.Id_Taikhoan)">Nạp thêm tiền</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -166,12 +176,17 @@
                                         <td>@m.Ngaymua</td>
                                         @if (m.Trangthai == 1)
                                         {
-                                            <td style="color: green">Còn lượt sử dụng</td>
+                                            <td style="color: green">Đang sử dụng</td>
 
                                         }
-                                        else
+                                        @if (m.Trangthai == 2)
                                         {
-                                            <td style="color: green">Hết lượt</td>
+                                            <td style="color: yellow">Đang chờ thanh toán</td>
+
+                                        }
+                                        @if (m.Trangthai == 3)
+                                        {
+                                            <td style="color: red">Hết lượt</td>
 
                                         }
                                         <td>@m.Soluotsudung</td>
@@ -189,8 +204,47 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">Nạp tiền</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <form id="bouqueti-form">
+                        <label class="required" for="inputEmail4">Nhà mạng</label>
+                        <div class="form-row">
+                            <select class="form-control form-control-sm" style="width: 100%">
+                                <option selected>Chọn nhà mạng</option>
+                                <option>Viettel</option>
+                                <option>Vinaphone</option>
+                                <option>Mobilephone</option>
+                            </select>
+                            <div class="form-group col-md-12">
+                                <label class="required" for="inputEmail4">Nhập mã thẻ</label>
+                                <input type="number" class="form-control contact-method" id="Tentram" placeholder="Nhập mã">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+                <button type="button" class="btn btn-primary" onclick="submit()">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script type="text/javascript" src="~/Scripts/qrcode.min.js"></script>
 <script>
+    var id_kh = 0;
     //$(document).ready(function () {
     //    new QRCode("qrcode", {
     //        text: "https://www.bugs.vn/store/products/moc-khoa-visual-studio",
@@ -202,4 +256,25 @@
     //    });
     //});
 
+    addMoney = (id) => {
+        id_kh = id;
+    }
+
+    submit = () => {
+        $.ajax({
+            url: '/UserPage/NapTien?id_tk=' + id_kh,
+            type: 'GET',
+            success: function (result) {
+                console.log(result)
+                if (result.success) {
+                    toastr.warning('Successfully !');
+                    window.location.reload();
+                }
+                else {
+                    toastr.warning('Failed !');
+                    $('.modal').modal('hide');
+                }
+            }
+        });
+    }
 </script>

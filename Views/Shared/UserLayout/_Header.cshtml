@@ -163,7 +163,8 @@
                         Id_Taikhoan: data.data.Id_Taikhoan,
                         Maloai: data.data.Maloai.trim(),
                         Tentaikhoan: data.data.Tentaikhoan.trim(),
-                        Token: data.token
+                        Token: data.token,
+                        Sodu: data.data.Sodu
                     };
                     localStorage.setItem("UserInfo", JSON.stringify(userInfo));
                     toastr.success('Successfully !');
