@@ -37,7 +37,7 @@ namespace QLXeBuyt.Controllers
                         Random rnd = new Random();
                         Tuyenxe tx = new Tuyenxe();
                         tx.Tuyenso = Int16.Parse(workSheet.Cells[i, 1].Value.ToString());
-                        tx.Tentuyen = workSheet.Cells[i, 2].Value.ToString().Trim();
+                        tx.Tentuyen = "Số chuyến " + soChuyen;
                         tx.Thoigianbatdau = new TimeSpan(rnd.Next(3, 6), 0, 0);
                         tx.Thoigianketthuc = new TimeSpan(rnd.Next(3, 6), 0, 0);
                         tx.Luotdi = workSheet.Cells[i, 5].Value.ToString().Trim();

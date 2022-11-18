@@ -58,8 +58,6 @@ namespace QLXeBuyt.Controllers
             _khachhang.Gioitinh = req.Gioitinh;
             _khachhang.Diachi = req.Diachi;
             _khachhang.Id_Taikhoan = _taikhoan.Id_Taikhoan;
-            db.SubmitChanges();
-
             db.Khachhangs.InsertOnSubmit(_khachhang);
             db.SubmitChanges();
             return Json(new { success = true, data = req }, JsonRequestBehavior.AllowGet);

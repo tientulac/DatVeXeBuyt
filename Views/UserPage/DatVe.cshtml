@@ -36,7 +36,7 @@
                         </label>
                         <input type="text" placeholder="Giá tiền" id="Giatien" disabled style="color: white">
                         <div class="col-md-12 row">
-                            <button onclick="buyTicket()">Xác nhận đặt</button>
+                            <a class="btn btn-warning" href="javascript:void(0)" type="button" onclick="buyTicket()">Xác nhận đặt</a>
                         </div>
                     </form>
                 </div>
@@ -87,26 +87,49 @@
     }
 
     buyTicket = () => {
-        var req = {
-            Ngayphathanh: ngayphathanh,
-            Ngayhethan: ngayhethan,
-            Matuyen: $('#select_tuyen').val(),
-            Loaive: 3,
-            Vethang: $('#veThang').is(":checked"),
-            Giatien: $('#Giatien').val(),
-            Id_Taikhoan: JSON.parse(localStorage.getItem('UserInfo')).Id_Taikhoan
-        }
-        postData('/UserPage/BuyTicket', req)
-            .then((data) => {
-                if (data.success) {
-                    toastr.success('Successfully !');
-                    $('.modal').modal('hide');
-                    window.location.reload();
-                }
-                else {
-                    toastr.warning('Failed !');
-                    $('.modal').modal('hide');
+        if (JSON.parse(localStorage.getItem('UserInfo'))) {
+            var soduTK = 0;
+            var req = {
+                Ngayphathanh: ngayphathanh,
+                Ngayhethan: ngayhethan,
+                Matuyen: $('#select_tuyen').val(),
+                Loaive: 3,
+                Vethang: $('#veThang').is(":checked"),
+                Giatien: $('#Giatien').val(),
+                Id_Taikhoan: JSON.parse(localStorage.getItem('UserInfo')).Id_Taikhoan
+            }
+
+            $.ajax({
+                url: '/TaiKhoan/FindById?id_taikhoan=' + JSON.parse(localStorage.getItem('UserInfo')).Id_Taikhoan,
+                type: 'GET',
+                success: function (result) {
+                    if (result.success) {
+                        soduTK = result.data.Sodu;
+                        if (soduTK < $('#Giatien').val()) {
+                            toastr.warning('Số dư trong tài khoản không đủ. Bạn cần nạp thêm tiền !');
+                        }
+                        else {
+                            postData('/UserPage/BuyTicket', req)
+                                .then((data) => {
+                                    if (data.success) {
+                                        toastr.success('Successfully !');
+                                    }
+                                    else {
+                                        toastr.warning('Failed !');
+                                        $('.modal').modal('hide');
+                                    }
+                                });
+                        }
+                    }
+                    else {
+                        toastr.warning('Failed !');
+                        $('.modal').modal('hide');
+                    }
                 }
             });
+        }
+        else {
+            toastr.warning('Bạn cần đăng nhập để thực hiện thao tác này !');
+        }
     }
 </script>
